@@ -1,15 +1,9 @@
 const yesBtn = document.getElementById('yes-btn');
 const noBtn = document.getElementById('no-btn');
 const messageContainer = document.getElementById('message-container');
-const glassCard = document.querySelector('.glass-card');
 
 // Configuration for physics
 const PROXIMITY_BUFFER = 150; // How close cursor must be to trigger move
-const MOVE_DISTANCE = 100;    // How far NO jumps
-const YES_MAGNET_STRENGTH = 0.8; // How much YES moves toward cursor (0-1)
-
-// Track state
-let isChasing = false;
 
 document.addEventListener('mousemove', (e) => {
     // Get button positions
@@ -33,23 +27,15 @@ function moveNoButton() {
     setTimeout(() => noBtn.classList.remove('wiggle'), 400);
 
     // 2. Calculate new random position (playful hop)
-    // We get the card dimensions to keep the button relatively contained or let it go wild
-    // Here we let it move semi-randomly but try to keep it on screen
-    const xOffset = (Math.random() - 0.5) * 300; 
-    const yOffset = (Math.random() - 0.5) * 300;
-
-    // Apply translation using CSS transform to keep it smooth
-    // We add current position logic if needed, but simple random offsets work best for "chaos"
-    // To ensure it doesn't fly off screen, we clamp it slightly or just let it roam:
-    
     // Simple approach: random coordinates within viewport
-    const maxX = window.innerWidth - noBtn.offsetWidth - 20;
-    const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+    // but kept somewhat centralized so it doesn't disappear off edges completely
+    const maxX = window.innerWidth - noBtn.offsetWidth - 50;
+    const maxY = window.innerHeight - noBtn.offsetHeight - 50;
     
-    const randomX = Math.random() * maxX;
-    const randomY = Math.random() * maxY;
+    const randomX = Math.max(50, Math.random() * maxX);
+    const randomY = Math.max(50, Math.random() * maxY);
 
-    // Switch to fixed positioning for the NO button so it can really run away
+    // Switch to fixed positioning so it can roam freely
     noBtn.style.position = 'fixed';
     noBtn.style.left = `${randomX}px`;
     noBtn.style.top = `${randomY}px`;
@@ -60,20 +46,13 @@ function moveYesButtonCloser(cursorX, cursorY) {
     // Make YES button absolute/fixed so it can move freely
     yesBtn.style.position = 'fixed';
     
-    // Current YES position
-    const yesRect = yesBtn.getBoundingClientRect();
-    
-    // Target: We want YES to be near the cursor, but not covering it immediately
-    // Let's make it "lag" slightly behind the cursor for a magnetic effect
-    const currentX = yesRect.left;
-    const currentY = yesRect.top;
-    
-    // Move 10% of the way to the cursor (smooth lerp)
-    const newX = currentX + (cursorX - currentX) * 0.05;
-    const newY = currentY + (cursorY - currentY) * 0.05;
+    // Target: We want YES to be near the cursor, acting like a magnet
+    // We offset it slightly so it doesn't instantly click itself
+    const offsetX = 50; 
+    const offsetY = 20;
 
-    yesBtn.style.left = `${newX}px`;
-    yesBtn.style.top = `${newY}px`;
+    yesBtn.style.left = `${cursorX - offsetX}px`;
+    yesBtn.style.top = `${cursorY - offsetY}px`;
     yesBtn.style.transform = 'none'; // Reset initial transform
 }
 
