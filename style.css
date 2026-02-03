@@ -30,8 +30,7 @@ h1{font-size:2.2rem;margin:0 0 8px;}
   height:260px; /* area where buttons operate */
 }
 
-/* Buttons are fixed-position-like but inside the buttons area.
-   We'll use position:fixed to make behavior consistent across window sizes */
+/* Buttons are fixed-position like before */
 #yes, #no{
   position: fixed;
   padding:14px 28px;
@@ -53,6 +52,39 @@ h1{font-size:2.2rem;margin:0 0 8px;}
 #no{
   background:white;
   color:var(--accent);
+}
+
+/* --- Cheesy animation styles --- */
+
+/* quick wiggle / pop for NO */
+@keyframes cheesyWiggle {
+  0%   { transform: translateY(0) rotate(0) scale(1); }
+  20%  { transform: translateY(-6px) rotate(-12deg) scale(1.12); }
+  50%  { transform: translateY(5px) rotate(10deg)  scale(0.95); }
+  80%  { transform: translateY(-3px) rotate(-6deg)  scale(1.04); }
+  100% { transform: translateY(0) rotate(0) scale(1); }
+}
+
+.no-cheesy {
+  animation: cheesyWiggle 600ms cubic-bezier(.2,.9,.3,1);
+  /* temporarily grown shadow for emphasis */
+  box-shadow: 0 12px 28px rgba(0,0,0,0.25);
+}
+
+/* emoji / pop bubble that floats up and fades */
+.pop-emoji {
+  position: fixed;
+  pointer-events: none;
+  font-size: 22px;
+  transform: translate(-50%, -50%);
+  /* animate up + fade out */
+  animation: popUp 820ms cubic-bezier(.22,.9,.3,1) forwards;
+  text-shadow: 0 6px 18px rgba(0,0,0,0.18);
+}
+@keyframes popUp {
+  0%   { transform: translate(-50%, -50%) translateY(0) scale(1); opacity: 1; filter: blur(0px); }
+  60%  { transform: translate(-50%, -50%) translateY(-36px) scale(1.14); opacity: 1; }
+  100% { transform: translate(-50%, -50%) translateY(-72px) scale(1.05); opacity: 0; filter: blur(2px); }
 }
 
 /* result text */
