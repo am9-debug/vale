@@ -1,0 +1,33 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #ff4e50, #f9d423);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.container {
+  text-align: center;
+}
+
+button {
+  padding: 15px 30px;
+  font-size: 18px;
+  margin: 10px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+#yes {
+  background: #ff1e56;
+  color: white;
+}
+
+#no {
+  background: white;
+  color: #ff1e56;
+}
