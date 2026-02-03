@@ -1,33 +1,59 @@
-body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #ff4e50, #f9d423);
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
+:root{
+  --bg1:#ff9aa2;
+  --bg2:#ff6f91;
+  --accent:#ff0066;
 }
 
-.container {
-  text-align: center;
+*{box-sizing: border-box;}
+html,body{height:100%;margin:0;font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;}
+body{
+  background: linear-gradient(135deg,var(--bg1),var(--bg2));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  color:#fff;
 }
 
-button {
-  padding: 15px 30px;
-  font-size: 18px;
-  margin: 10px;
-  border: none;
-  border-radius: 30px;
-  cursor: pointer;
+.page{
+  text-align:center;
+  width:100%;
+  max-width:900px;
+  padding:40px;
 }
 
-#yes {
-  background: #ff1e56;
-  color: white;
+h1{font-size:2.2rem;margin:0 0 8px;}
+.lead{font-size:1.1rem;margin:0 0 24px;opacity:0.95;}
+
+.buttons{
+  position:relative;
+  height:260px; /* area where buttons operate */
 }
 
-#no {
-  background: white;
-  color: #ff1e56;
+/* Buttons are fixed-position-like but inside the buttons area.
+   We'll use position:fixed to make behavior consistent across window sizes */
+#yes, #no{
+  position: fixed;
+  padding:14px 28px;
+  font-size:18px;
+  border-radius:28px;
+  border:none;
+  cursor:pointer;
+  user-select:none;
+  transition: left 0.28s ease, top 0.28s ease, transform 0.18s ease;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.18);
 }
+
+/* styling */
+#yes{
+  background: var(--accent);
+  color:white;
+}
+
+#no{
+  background:white;
+  color:var(--accent);
+}
+
+/* result text */
+.result{margin-top:22px;font-size:1.05rem}
