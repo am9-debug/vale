@@ -1,91 +1,88 @@
-:root{
-  --bg1:#ff9aa2;
-  --bg2:#ff6f91;
-  --accent:#ff0066;
+/* =========================
+   RUNNING LEGS FOR NO
+========================= */
+
+/* Legs container */
+#no::after {
+  content: "👟   👟";
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translateX(-50%);
+  font-size: 16px;
+  animation: legRun 0.35s infinite linear;
 }
 
-*{box-sizing: border-box;}
-html,body{height:100%;margin:0;font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;}
-body{
-  background: linear-gradient(135deg,var(--bg1),var(--bg2));
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
-  color:#fff;
+/* Running motion */
+@keyframes legRun {
+  0%   { transform: translateX(-50%) translateY(0); }
+  50%  { transform: translateX(-50%) translateY(-4px); }
+  100% { transform: translateX(-50%) translateY(0); }
 }
 
-.page{
-  text-align:center;
-  width:100%;
-  max-width:900px;
-  padding:40px;
+/* Tilt while running */
+.no-running {
+  transform: rotate(-12deg) scale(1.05);
 }
 
-h1{font-size:2.2rem;margin:0 0 8px;}
-.lead{font-size:1.1rem;margin:0 0 24px;opacity:0.95;}
+/* =========================
+   GRAND YES LOVE ANIMATION
+========================= */
 
-.buttons{
-  position:relative;
-  height:260px; /* area where buttons operate */
-}
-
-/* Buttons are fixed-position like before */
-#yes, #no{
+.love-overlay {
   position: fixed;
-  padding:14px 28px;
-  font-size:18px;
-  border-radius:28px;
-  border:none;
-  cursor:pointer;
-  user-select:none;
-  transition: left 0.28s ease, top 0.28s ease, transform 0.18s ease;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+  inset: 0;
+  background: radial-gradient(circle at center, #ff7eb3, #ff165d);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeIn 0.6s ease forwards;
 }
 
-/* styling */
-#yes{
-  background: var(--accent);
-  color:white;
+.love-message {
+  text-align: center;
+  color: white;
+  animation: popIn 1s ease forwards;
 }
 
-#no{
-  background:white;
-  color:var(--accent);
+.love-message h1 {
+  font-size: 3rem;
+  margin-bottom: 10px;
 }
 
-/* --- Cheesy animation styles --- */
-
-/* quick wiggle / pop for NO */
-@keyframes cheesyWiggle {
-  0%   { transform: translateY(0) rotate(0) scale(1); }
-  20%  { transform: translateY(-6px) rotate(-12deg) scale(1.12); }
-  50%  { transform: translateY(5px) rotate(10deg)  scale(0.95); }
-  80%  { transform: translateY(-3px) rotate(-6deg)  scale(1.04); }
-  100% { transform: translateY(0) rotate(0) scale(1); }
+.love-message p {
+  font-size: 1.3rem;
+  opacity: 0.95;
 }
 
-.no-cheesy {
-  animation: cheesyWiggle 600ms cubic-bezier(.2,.9,.3,1);
-  /* temporarily grown shadow for emphasis */
-  box-shadow: 0 12px 28px rgba(0,0,0,0.25);
-}
-
-/* emoji / pop bubble that floats up and fades */
-.pop-emoji {
-  position: fixed;
-  pointer-events: none;
+/* Floating hearts */
+.heart {
+  position: absolute;
+  bottom: -40px;
   font-size: 22px;
-  transform: translate(-50%, -50%);
-  /* animate up + fade out */
-  animation: popUp 820ms cubic-bezier(.22,.9,.3,1) forwards;
-  text-shadow: 0 6px 18px rgba(0,0,0,0.18);
-}
-@keyframes popUp {
-  0%   { transform: translate(-50%, -50%) translateY(0) scale(1); opacity: 1; filter: blur(0px); }
-  60%  { transform: translate(-50%, -50%) translateY(-36px) scale(1.14); opacity: 1; }
-  100% { transform: translate(-50%, -50%) translateY(-72px) scale(1.05); opacity: 0; filter: blur(2px); }
+  animation: floatUp 5s linear infinite;
+  opacity: 0.8;
 }
 
-/* result text */
-.result{margin-top:22px;font-size:1.05rem}
+@keyframes floatUp {
+  from {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-110vh) scale(1.5);
+    opacity: 0;
+  }
+}
+
+@keyframes popIn {
+  0% { transform: scale(0.4); opacity: 0; }
+  60% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
