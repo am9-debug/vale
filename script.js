@@ -2,19 +2,36 @@ const noBtn = document.getElementById("no");
 const yesBtn = document.getElementById("yes");
 const result = document.getElementById("result");
 
-// Make YES smoothly movable
+// Prepare buttons
+noBtn.style.position = "absolute";
 yesBtn.style.position = "absolute";
-yesBtn.style.transition = "0.4s ease";
+noBtn.style.transition = "0.25s ease";
+yesBtn.style.transition = "0.35s ease";
 
-// NO button escapes
-noBtn.addEventListener("mouseover", (e) => {
-  // Move NO far away
-  noBtn.style.position = "absolute";
-  noBtn.style.left = Math.random() * 85 + "%";
-  noBtn.style.top = Math.random() * 85 + "%";
+// Initial positions
+noBtn.style.left = "55%";
+noBtn.style.top = "55%";
+yesBtn.style.left = "40%";
+yesBtn.style.top = "55%";
 
-  // Bring YES closer to cursor (but not exact spot)
-  const offsetX = 60;
+// Hide & Seek logic for NO
+noBtn.addEventListener("mousemove", (e) => {
+  const moveDistance = 120;
+
+  let newX = noBtn.offsetLeft + (Math.random() > 0.5 ? moveDistance : -moveDistance);
+  let newY = noBtn.offsetTop + (Math.random() > 0.5 ? moveDistance : -moveDistance);
+
+  // Keep NO inside screen
+  newX = Math.max(20, Math.min(window.innerWidth - 120, newX));
+  newY = Math.max(20, Math.min(window.innerHeight - 60, newY));
+
+  noBtn.style.left = newX + "px";
+  noBtn.style.top = newY + "px";
+});
+
+// YES comes closer when NO tries to escape
+noBtn.addEventListener("mouseenter", (e) => {
+  const offsetX = 80;
   const offsetY = 40;
 
   yesBtn.style.left = e.clientX - offsetX + "px";
@@ -23,5 +40,5 @@ noBtn.addEventListener("mouseover", (e) => {
 
 // YES click reaction
 yesBtn.addEventListener("click", () => {
-  result.innerHTML = "YAY ❤️ You chose YES! Happy Valentine’s Day 💖🌹";
+  result.innerHTML = "You found the right answer ❤️ Happy Valentine’s Day 💖🌹";
 });
